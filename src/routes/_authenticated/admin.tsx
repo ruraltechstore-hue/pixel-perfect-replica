@@ -5,9 +5,8 @@ import { toast } from "sonner";
 import { Pencil, Trash2, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { inr } from "@/lib/store";
+import { inr, statusLabel, statusSteps } from "@/lib/store";
 import type { Category, Product, Variant } from "@/lib/catalog";
-import { statusLabel, statusSteps } from "./account";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — Angadi" }, { name: "description", content: "Manage Angadi categories, products and orders." }, { property: "og:title", content: "Admin — Angadi" }, { property: "og:description", content: "Manage Angadi store." }, { name: "robots", content: "noindex" }] }),

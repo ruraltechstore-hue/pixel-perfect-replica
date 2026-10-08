@@ -75,3 +75,5 @@ export function useStore() {
 
 export const inr = (n: number) => "₹" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 });
 export const shippingFor = (subtotal: number) => (subtotal >= 999 || subtotal === 0 ? 0 : 79);
+export const statusSteps = ["placed", "confirmed", "shipped", "out_for_delivery", "delivered"];
+export const statusLabel = (s: string) => s.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());

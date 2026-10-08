@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { inr } from "@/lib/store";
+import { inr, statusLabel } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/account")({
@@ -9,8 +9,6 @@ export const Route = createFileRoute("/_authenticated/account")({
   component: Account,
 });
 
-export const statusSteps = ["placed", "confirmed", "shipped", "out_for_delivery", "delivered"];
-export const statusLabel = (s: string) => s.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 
 function Account() {
   const { user } = Route.useRouteContext();

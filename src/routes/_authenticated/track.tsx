@@ -3,8 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { inr, type CartItem } from "@/lib/store";
-import { statusLabel, statusSteps } from "./account";
+import { inr, statusLabel, statusSteps, type CartItem } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/track")({
   validateSearch: (s: Record<string, unknown>) => ({ order: typeof s.order === "string" ? s.order.slice(0, 30) : undefined }),
