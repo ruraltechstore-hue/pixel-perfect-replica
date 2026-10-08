@@ -10,6 +10,8 @@ import { ProductRow } from "@/components/site/ProductCard";
 export const Route = createFileRoute("/product/$slug")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Product details — Angadi" },
       { name: "description", content: "Product details, specifications and delivery information at Angadi." },
       { property: "og:title", content: "Product details — Angadi" },

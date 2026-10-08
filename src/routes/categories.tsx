@@ -4,7 +4,7 @@ import { categoriesQuery } from "@/lib/catalog";
 import { meta } from "@/components/site/Page";
 
 export const Route = createFileRoute("/categories")({
-  head: () => meta("Categories", "Explore every Angadi category — solar, phones, farm tools, water and more."),
+  head: () => meta("Categories", "Browse the available Angadi categories."),
   component: Categories,
 });
 

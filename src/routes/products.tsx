@@ -13,10 +13,12 @@ export const Route = createFileRoute("/products")({
   }),
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Shop all products — Angadi" },
-      { name: "description", content: "Browse solar kits, rugged phones, farm tools and irrigation equipment." },
+      { name: "description", content: "Browse the available Angadi products." },
       { property: "og:title", content: "Shop all products — Angadi" },
-      { property: "og:description", content: "Browse solar kits, rugged phones, farm tools and irrigation equipment." },
+      { property: "og:description", content: "Browse the available Angadi products." },
     ],
   }),
   component: Products,

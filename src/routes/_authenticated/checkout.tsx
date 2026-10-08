@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { inr, useStore, shippingFor } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/checkout")({
-  head: () => ({ meta: [{ title: "Checkout — Angadi" }, { name: "description", content: "Complete your Angadi order." }, { property: "og:title", content: "Checkout — Angadi" }, { property: "og:description", content: "Complete your Angadi order." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { title: "Checkout — Angadi" }, { name: "description", content: "Complete your Angadi order." }, { property: "og:title", content: "Checkout — Angadi" }, { property: "og:description", content: "Complete your Angadi order." }] }),
   component: Checkout,
 });
 

@@ -9,7 +9,7 @@ import { inr, statusLabel, statusSteps } from "@/lib/store";
 import type { Category, Product, Variant } from "@/lib/catalog";
 
 export const Route = createFileRoute("/_authenticated/admin")({
-  head: () => ({ meta: [{ title: "Admin — Angadi" }, { name: "description", content: "Manage Angadi categories, products and orders." }, { property: "og:title", content: "Admin — Angadi" }, { property: "og:description", content: "Manage Angadi store." }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { title: "Admin — Angadi" }, { name: "description", content: "Manage Angadi categories, products and orders." }, { property: "og:title", content: "Admin — Angadi" }, { property: "og:description", content: "Manage Angadi store." }, { name: "robots", content: "noindex" }] }),
   component: Admin,
 });
 

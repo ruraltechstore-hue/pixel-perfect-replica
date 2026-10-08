@@ -5,7 +5,7 @@ import { inr, statusLabel } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/_authenticated/account")({
-  head: () => ({ meta: [{ title: "My account — Angadi" }, { name: "description", content: "Your Angadi account and orders." }, { property: "og:title", content: "My account — Angadi" }, { property: "og:description", content: "Your Angadi account and orders." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { title: "My account — Angadi" }, { name: "description", content: "Your Angadi account and orders." }, { property: "og:title", content: "My account — Angadi" }, { property: "og:description", content: "Your Angadi account and orders." }] }),
   component: Account,
 });
 
