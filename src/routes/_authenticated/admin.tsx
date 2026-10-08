@@ -73,7 +73,7 @@ function Dashboard() {
         ))}
       </div>
       <h2 className="mt-8 text-2xl font-semibold">Low stock</h2>
-      {low.length === 0 ? <p className="text-sm text-muted-foreground">All products are well stocked.</p> : (
+      {low.length === 0 ? <p className="text-sm text-muted-foreground">No low-stock products.</p> : (
         <ul className="mt-3 divide-y rounded-xl border bg-card">{low.map((p) => <li key={p.id} className="flex justify-between px-4 py-2 text-sm"><span>{p.name}</span><span className="font-semibold text-destructive">{p.stock} left</span></li>)}</ul>
       )}
     </div>
@@ -189,7 +189,7 @@ function Products() {
       is_featured: f.is_featured, is_trending: f.is_trending, is_new: f.is_new, is_bestseller: f.is_bestseller, is_active: f.is_active,
     };
     const { slug, ...rest } = row;
-    const { error } = f.id ? await supabase.from("products").update(rest).eq("id", f.id) : await supabase.from("products").insert({ ...rest, slug: slug! });
+    const { error } = f.id ? await supabase.from("products").update(rest).eq("id", f.id) : await supabase.from("products").insert({ ...rest, slug: slug ?? slugify(f.name) });
     if (error) { toast.error(error.message); return; }
     toast.success("Product saved"); setF(null); refresh();
   };
@@ -238,7 +238,7 @@ function Products() {
           </div>
         </div>
         <textarea className={input} rows={4} placeholder={"Variants, one per line:\nname | price | stock | sku"} value={f.variants} onChange={set("variants")} />
-        <textarea className={input} rows={4} placeholder={"Specifications, one per line:\nBattery: 6000mAh"} value={f.specifications} onChange={set("specifications")} />
+        <textarea className={input} rows={4} placeholder={"Specifications, one per line:\nSpecification: value"} value={f.specifications} onChange={set("specifications")} />
         <input className={`${input} md:col-span-2`} placeholder="Tags, comma separated" value={f.tags} onChange={set("tags")} />
         <div className="flex flex-wrap gap-4 text-sm md:col-span-2">
           {([["is_active", "Active"], ["is_featured", "Featured"], ["is_trending", "Trending"], ["is_new", "New arrival"], ["is_bestseller", "Best seller"]] as const).map(([k, l]) => (

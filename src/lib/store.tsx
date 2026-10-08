@@ -24,6 +24,12 @@ type Store = {
 
 export const itemKey = (i: { productId: string; variant?: string }) => `${i.productId}::${i.variant ?? ""}`;
 
+const removedSampleIds = new Set([
+  "352027b8-21c3-404d-9f35-af4a7a3a8000", "a2b48412-b498-4770-b3a7-e4adba394ece",
+  "ce9bf7b1-045f-48e9-b1ea-d09638f353b8", "f2361ecf-9d64-4f7d-b89a-9d50b832de8b",
+  "c5f3d0b6-95b3-4688-b04b-68fdffdce285", "77d4cefa-5678-47a1-8cd1-80781daa505e",
+]);
+
 const Ctx = createContext<Store | null>(null);
 
 function useLocal<T>(key: string, init: T) {
@@ -32,7 +38,13 @@ function useLocal<T>(key: string, init: T) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(key);
-      if (raw) setV(JSON.parse(raw));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const cleaned = Array.isArray(parsed)
+          ? parsed.filter((item) => !removedSampleIds.has(typeof item === "string" ? item : item?.productId))
+          : parsed;
+        setV(cleaned);
+      }
     } catch {}
     setLoaded(true);
   }, [key]);
@@ -74,6 +86,6 @@ export function useStore() {
 }
 
 export const inr = (n: number) => "₹" + Number(n).toLocaleString("en-IN", { maximumFractionDigits: 0 });
-export const shippingFor = (subtotal: number) => (subtotal >= 999 || subtotal === 0 ? 0 : 79);
+export const shippingFor = (_subtotal: number): null => null;
 export const statusSteps = ["placed", "confirmed", "shipped", "out_for_delivery", "delivered"];
 export const statusLabel = (s: string) => s.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());

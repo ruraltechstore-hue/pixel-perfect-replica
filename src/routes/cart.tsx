@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { inr, itemKey, useStore, shippingFor } from "@/lib/store";
+import { inr, itemKey, useStore } from "@/lib/store";
 import { meta } from "@/components/site/Page";
 
 export const Route = createFileRoute("/cart")({
@@ -13,7 +13,6 @@ export const Route = createFileRoute("/cart")({
 function Cart() {
   const { cart, updateQty, removeFromCart } = useStore();
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const ship = shippingFor(subtotal);
 
   if (!cart.length)
     return (
@@ -52,12 +51,11 @@ function Cart() {
         <h2 className="text-2xl font-semibold">Summary</h2>
         <div className="mt-4 space-y-2 text-sm">
           <Row l="Subtotal" r={inr(subtotal)} />
-          <Row l="Delivery" r={ship ? inr(ship) : "Free"} />
+          <Row l="Delivery" r="Not confirmed" />
           <div className="gold-rule my-3" />
-          <Row l="Total" r={inr(subtotal + ship)} bold />
+          <Row l="Items total" r={inr(subtotal)} bold />
         </div>
-        {ship > 0 && <p className="mt-2 text-xs text-muted-foreground">Free delivery on orders above ₹999</p>}
-        <Link to="/checkout" className="mt-5 block rounded-full bg-primary py-3 text-center font-semibold text-primary-foreground hover:bg-primary-deep">Proceed to checkout</Link>
+        <p className="mt-4 text-sm text-muted-foreground">Checkout is unavailable until delivery charges are confirmed.</p>
       </aside>
     </div>
   );
