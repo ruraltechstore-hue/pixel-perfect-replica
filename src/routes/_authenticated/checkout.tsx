@@ -3,8 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
-import { inr, useStore } from "@/lib/store";
-import { shippingFor } from "../cart";
+import { inr, useStore, shippingFor } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/checkout")({
   head: () => ({ meta: [{ title: "Checkout — Angadi" }, { name: "description", content: "Complete your Angadi order." }, { property: "og:title", content: "Checkout — Angadi" }, { property: "og:description", content: "Complete your Angadi order." }] }),

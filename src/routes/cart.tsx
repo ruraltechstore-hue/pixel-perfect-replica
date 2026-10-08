@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { inr, itemKey, useStore } from "@/lib/store";
+import { inr, itemKey, useStore, shippingFor } from "@/lib/store";
 import { meta } from "@/components/site/Page";
 
 export const Route = createFileRoute("/cart")({
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/cart")({
   component: Cart,
 });
 
-export const shippingFor = (subtotal: number) => (subtotal >= 999 || subtotal === 0 ? 0 : 79);
+
 
 function Cart() {
   const { cart, updateQty, removeFromCart } = useStore();
