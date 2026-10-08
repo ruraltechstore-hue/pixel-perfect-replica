@@ -39,7 +39,7 @@ function Checkout() {
   const place = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(form);
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check your details"); return; }
     setBusy(true);
     const { data, error } = await supabase
       .from("orders")
@@ -53,7 +53,7 @@ function Checkout() {
       .select("order_number")
       .single();
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     clearCart();
     toast.success("Order placed!");
     navigate({ to: "/track", search: { order: data.order_number } });

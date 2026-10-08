@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { inr, statusLabel, statusSteps, type CartItem } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/track")({
-  validateSearch: (s: Record<string, unknown>) => ({ order: typeof s.order === "string" ? s.order.slice(0, 30) : undefined }),
+  validateSearch: (s: Record<string, unknown>): { order?: string | undefined } => ({ order: typeof s["order"] === "string" ? (s["order"] as string).slice(0, 30) : undefined }),
   head: () => ({ meta: [{ title: "Track your order — Angadi" }, { name: "description", content: "Check the delivery status of your Angadi order." }, { property: "og:title", content: "Track your order — Angadi" }, { property: "og:description", content: "Check the delivery status of your Angadi order." }] }),
   component: Track,
 });

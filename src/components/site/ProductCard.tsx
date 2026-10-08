@@ -37,7 +37,7 @@ export function ProductCard({ p }: { p: Product }) {
           <button
             disabled={p.stock <= 0}
             onClick={() => {
-              addToCart({ productId: p.id, slug: p.slug, name: p.name, image: p.images[0], price: Number(p.price), qty: 1 });
+              addToCart({ productId: p.id, slug: p.slug, name: p.name, image: p.images[0] ?? "", price: Number(p.price), qty: 1 });
               toast.success("Added to cart");
             }}
             className="rounded-full border border-primary px-3 py-1 text-xs font-semibold text-primary hover:bg-primary hover:text-primary-foreground disabled:opacity-40"

@@ -44,7 +44,7 @@ function ProductPage() {
   const images = v?.image ? [v.image, ...p.images] : p.images;
 
   const add = (buy: boolean) => {
-    addToCart({ productId: p.id, slug: p.slug, name: p.name, image: images[0], price, variant: v?.name, qty });
+    addToCart({ productId: p.id, slug: p.slug, name: p.name, image: images[0] ?? "", price, ...(v ? { variant: v.name } : {}), qty });
     if (buy) navigate({ to: "/checkout" });
     else toast.success("Added to cart");
   };

@@ -87,16 +87,16 @@ function Categories() {
   const [edit, setEdit] = useState<Partial<Category> | null>(null);
 
   const save = async () => {
-    if (!edit?.name?.trim()) return toast.error("Name is required");
+    if (!edit?.name?.trim()) { toast.error("Name is required"); return; }
     const row = { name: edit.name.trim(), slug: slugify(edit.name), image_url: edit.image_url || null, is_active: !!edit.is_active, is_featured: !!edit.is_featured, sort_order: Number(edit.sort_order) || 0 };
     const { error } = edit.id ? await supabase.from("categories").update(row).eq("id", edit.id) : await supabase.from("categories").insert(row);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Saved"); setEdit(null); refresh();
   };
   const del = async (id: string) => {
     if (!confirm("Delete this category? Products will become uncategorised.")) return;
     const { error } = await supabase.from("categories").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
 
@@ -155,7 +155,7 @@ function ImageField({ value, onChange }: { value: string; onChange: (u: string) 
 }
 
 type Form = {
-  id?: string; name: string; sku: string; category_id: string; brand: string; description: string; images: string[];
+  id?: string | undefined; name: string; sku: string; category_id: string; brand: string; description: string; images: string[];
   price: string; mrp: string; stock: string; low_stock_threshold: string; variants: string; specifications: string; tags: string;
   is_featured: boolean; is_trending: boolean; is_new: boolean; is_bestseller: boolean; is_active: boolean;
 };
@@ -177,10 +177,10 @@ function Products() {
 
   const save = async () => {
     if (!f) return;
-    if (!f.name.trim() || !f.price) return toast.error("Name and price are required");
+    if (!f.name.trim() || !f.price) { toast.error("Name and price are required"); return; }
     const variants = f.variants.split("\n").map((l) => l.split("|").map((s) => s.trim())).filter((a) => a[0])
       .map(([name, price, stock, sku]) => ({ name, price: Number(price) || 0, stock: Number(stock) || 0, ...(sku ? { sku } : {}) }));
-    const specifications = Object.fromEntries(f.specifications.split("\n").map((l) => l.split(":")).filter((a) => a.length > 1).map(([k, ...v]) => [k.trim(), v.join(":").trim()]));
+    const specifications = Object.fromEntries(f.specifications.split("\n").map((l) => l.split(":")).filter((a) => a.length > 1).map(([k, ...v]) => [(k ?? "").trim(), v.join(":").trim()]));
     const row = {
       name: f.name.trim(), slug: f.id ? undefined : `${slugify(f.name)}-${Math.random().toString(36).slice(2, 6)}`, sku: f.sku || null,
       category_id: f.category_id || null, brand: f.brand || null, description: f.description || null, images: f.images,
@@ -190,13 +190,13 @@ function Products() {
     };
     const { slug, ...rest } = row;
     const { error } = f.id ? await supabase.from("products").update(rest).eq("id", f.id) : await supabase.from("products").insert({ ...rest, slug: slug! });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Product saved"); setF(null); refresh();
   };
   const del = async (id: string) => {
     if (!confirm("Delete this product?")) return;
     const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
 
@@ -280,7 +280,7 @@ function Orders() {
   const refresh = useRefresh();
   const update = async (id: string, patch: { status?: string; payment_status?: string }) => {
     const { error } = await supabase.from("orders").update(patch).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     refresh();
   };
   return (

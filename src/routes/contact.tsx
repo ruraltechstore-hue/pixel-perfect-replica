@@ -22,11 +22,11 @@ function Contact() {
   const send = async (e: React.FormEvent) => {
     e.preventDefault();
     const p = schema.safeParse(f);
-    if (!p.success) return toast.error("Please fill in all fields correctly");
+    if (!p.success) { toast.error("Please fill in all fields correctly"); return; }
     setBusy(true);
     const { error } = await supabase.from("contact_messages").insert(p.data);
     setBusy(false);
-    if (error) return toast.error("Could not send, please try again");
+    if (error) { toast.error("Could not send, please try again"); return; }
     toast.success("Thanks! We'll get back to you soon.");
     setF({ name: "", email: "", message: "" });
   };

@@ -102,7 +102,7 @@ export function Header() {
             {c.name}
           </Link>
         ))}
-        <Link to="/track" className="ml-auto whitespace-nowrap text-muted-foreground hover:text-primary">Track order</Link>
+        <Link to="/track" search={{}} className="ml-auto whitespace-nowrap text-muted-foreground hover:text-primary">Track order</Link>
       </div>
     </header>
   );

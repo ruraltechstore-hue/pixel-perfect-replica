@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { categoriesQuery, productsQuery, discount } from "@/lib/catalog";
 import { ProductCard } from "@/components/site/ProductCard";
 
-type Search = { q?: string; category?: string; sort?: "new" | "low" | "high" | "discount" };
+type Search = { q?: string | undefined; category?: string | undefined; sort?: "new" | "low" | "high" | "discount" | undefined };
 
 export const Route = createFileRoute("/products")({
   validateSearch: (s: Record<string, unknown>): Search => ({
