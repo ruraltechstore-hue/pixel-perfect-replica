@@ -26,6 +26,7 @@ function Products() {
   const { q, category, sort } = Route.useSearch();
   const { data: cats = [] } = useQuery(categoriesQuery);
   const { data: products = [], isLoading } = useQuery(productsQuery);
+  const navigate = Route.useNavigate();
   const cat = cats.find((c) => c.slug === category);
   const term = q?.toLowerCase();
 
@@ -51,12 +52,7 @@ function Products() {
         ))}
         <select
           value={sort ?? "new"}
-          onChange={(e) => {
-            const url = new URL(window.location.href);
-            url.searchParams.set("sort", e.target.value);
-            window.history.replaceState(null, "", url);
-            window.dispatchEvent(new PopStateEvent("popstate"));
-          }}
+          onChange={(e) => navigate({ search: { q, category, sort: e.target.value as Search["sort"] }, replace: true })}
           className="ml-auto rounded-full border bg-card px-4 py-2 text-sm"
         >
           <option value="new">Newest</option>
