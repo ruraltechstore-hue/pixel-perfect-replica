@@ -13,7 +13,7 @@ export function Footer() {
         <div>
           <p className="font-display text-3xl tracking-[0.3em]">ANGADI</p>
           <div className="gold-rule my-3 w-40" />
-          <p className="text-sm opacity-75">Trusted technology for rural India — solar, phones, farm and water tools, delivered to your village.</p>
+          <p className="text-sm opacity-75">Rural tech store</p>
         </div>
         {groups.map((g) => (
           <div key={g.title}>

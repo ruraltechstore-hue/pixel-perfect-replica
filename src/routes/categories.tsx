@@ -13,6 +13,7 @@ function Categories() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
       <h1 className="mb-8 text-4xl font-semibold text-primary-deep">All categories</h1>
+      {cats.length === 0 && <p className="text-muted-foreground">No categories available.</p>}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {cats.map((c) => (
           <Link key={c.id} to="/products" search={{ category: c.slug }} className="group overflow-hidden rounded-2xl border bg-card shadow-card">

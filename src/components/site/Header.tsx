@@ -45,7 +45,7 @@ export function Header() {
               onChange={(e) => setQ(e.target.value)}
               onFocus={() => setFocus(true)}
               onBlur={() => setTimeout(() => setFocus(false), 150)}
-              placeholder="Search solar kits, phones, sprayers…"
+              placeholder="Search products"
               className="w-full bg-transparent px-3 py-2.5 text-sm outline-none"
               maxLength={100}
             />

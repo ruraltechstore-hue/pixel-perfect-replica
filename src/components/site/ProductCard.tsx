@@ -26,9 +26,9 @@ export function ProductCard({ p }: { p: Product }) {
       <div className="flex flex-1 flex-col gap-1 p-4">
         <p className="text-xs uppercase tracking-wider text-muted-foreground">{p.brand}</p>
         <Link to="/product/$slug" params={{ slug: p.slug }} className="line-clamp-2 font-medium leading-snug hover:text-primary">{p.name}</Link>
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+        {p.review_count > 0 && <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <Star className="h-3.5 w-3.5 fill-gold text-gold" /> {p.rating} ({p.review_count})
-        </div>
+        </div>}
         <div className="mt-auto flex items-end justify-between pt-2">
           <div>
             <span className="text-lg font-bold text-primary">{inr(p.price)}</span>
