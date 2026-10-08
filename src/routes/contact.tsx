@@ -27,11 +27,11 @@ function Contact() {
     const { error } = await supabase.from("contact_messages").insert(p.data);
     setBusy(false);
     if (error) { toast.error("Could not send, please try again"); return; }
-    toast.success("Thanks! We'll get back to you soon.");
+    toast.success("Message sent.");
     setF({ name: "", email: "", message: "" });
   };
   return (
-    <Page title="Contact us" subtitle="We usually reply within one working day.">
+    <Page title="Contact us">
       <form onSubmit={send} className="space-y-3">
         <input className="w-full rounded-xl border bg-card px-4 py-3" placeholder="Your name" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
         <input className="w-full rounded-xl border bg-card px-4 py-3" type="email" placeholder="Email" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} />

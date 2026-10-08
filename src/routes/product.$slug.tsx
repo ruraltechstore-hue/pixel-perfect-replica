@@ -10,6 +10,8 @@ import { ProductRow } from "@/components/site/ProductCard";
 export const Route = createFileRoute("/product/$slug")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Product details — Angadi" },
       { name: "description", content: "Product details, specifications and delivery information at Angadi." },
       { property: "og:title", content: "Product details — Angadi" },
@@ -81,10 +83,10 @@ function ProductPage() {
         <div>
           <p className="text-sm uppercase tracking-widest text-muted-foreground">{p.brand}</p>
           <h1 className="mt-1 text-4xl font-semibold text-primary-deep md:text-5xl">{p.name}</h1>
-          <div className="mt-2 flex items-center gap-2 text-sm">
+          {p.review_count > 0 && <div className="mt-2 flex items-center gap-2 text-sm">
             <span className="flex items-center gap-1 rounded-full bg-success px-2 py-0.5 font-semibold text-primary-foreground">{p.rating} <Star className="h-3 w-3 fill-current" /></span>
             <span className="text-muted-foreground">{p.review_count} ratings</span>
-          </div>
+          </div>}
           <div className="gold-rule my-5" />
           <div className="flex items-baseline gap-3">
             <span className="text-4xl font-bold text-primary">{inr(price)}</span>
@@ -122,7 +124,7 @@ function ProductPage() {
             <button disabled={stock <= 0} onClick={() => add(false)} className="rounded-full border-2 border-primary py-3 font-semibold text-primary hover:bg-accent disabled:opacity-40">Add to cart</button>
             <button disabled={stock <= 0} onClick={() => add(true)} className="rounded-full bg-primary py-3 font-semibold text-primary-foreground hover:bg-primary-deep disabled:opacity-40">Buy now</button>
           </div>
-          <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground"><Truck className="h-4 w-4" /> Delivery in 3–7 days · Cash on delivery available</p>
+          <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground"><Truck className="h-4 w-4" /> Delivery details not yet confirmed</p>
 
           {p.description && <><h2 className="mt-8 text-2xl font-semibold">Description</h2><p className="mt-2 text-foreground/80">{p.description}</p></>}
           {specs.length > 0 && (

@@ -15,6 +15,13 @@
       "when": 1791442074393,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791444292764,
+      "tag": "0002_remove_unverified_catalog_defaults",
+      "breakpoints": true
     }
   ]
 }

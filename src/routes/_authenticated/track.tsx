@@ -7,7 +7,7 @@ import { inr, statusLabel, statusSteps, type CartItem } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/track")({
   validateSearch: (s: Record<string, unknown>): { order?: string | undefined } => ({ order: typeof s["order"] === "string" ? (s["order"] as string).slice(0, 30) : undefined }),
-  head: () => ({ meta: [{ title: "Track your order — Angadi" }, { name: "description", content: "Check the delivery status of your Angadi order." }, { property: "og:title", content: "Track your order — Angadi" }, { property: "og:description", content: "Check the delivery status of your Angadi order." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { title: "Track your order — Angadi" }, { name: "description", content: "Check the delivery status of your Angadi order." }, { property: "og:title", content: "Track your order — Angadi" }, { property: "og:description", content: "Check the delivery status of your Angadi order." }] }),
   component: Track,
 });
 
@@ -19,7 +19,8 @@ function Track() {
     queryKey: ["order", order],
     enabled: !!order,
     queryFn: async () => {
-      const { data } = await supabase.from("orders").select("*").eq("order_number", order!).maybeSingle();
+      if (!order) return null;
+      const { data } = await supabase.from("orders").select("*").eq("order_number", order).maybeSingle();
       return data;
     },
   });
@@ -29,7 +30,7 @@ function Track() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-4xl font-semibold text-primary-deep">Track your order</h1>
       <form onSubmit={(e) => { e.preventDefault(); navigate({ to: "/track", search: { order: input.trim() } }); }} className="mt-6 flex gap-2">
-        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Order number, e.g. AG26100812345" className="flex-1 rounded-full border bg-card px-5 py-3" />
+        <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Order number" className="flex-1 rounded-full border bg-card px-5 py-3" />
         <button className="rounded-full bg-primary px-6 font-semibold text-primary-foreground">Track</button>
       </form>
       {order && isLoading && <p className="mt-8 text-muted-foreground">Looking up…</p>}

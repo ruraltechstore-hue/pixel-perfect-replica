@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { inr, useStore, shippingFor } from "@/lib/store";
 
 export const Route = createFileRoute("/_authenticated/checkout")({
-  head: () => ({ meta: [{ title: "Checkout — Angadi" }, { name: "description", content: "Complete your Angadi order." }, { property: "og:title", content: "Checkout — Angadi" }, { property: "og:description", content: "Complete your Angadi order." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { title: "Checkout — Angadi" }, { name: "description", content: "Complete your Angadi order." }, { property: "og:title", content: "Checkout — Angadi" }, { property: "og:description", content: "Complete your Angadi order." }] }),
   component: Checkout,
 });
 
@@ -38,6 +38,7 @@ function Checkout() {
 
   const place = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (ship === null) { toast.error("Delivery charges have not been confirmed."); return; }
     const parsed = schema.safeParse(form);
     if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check your details"); return; }
     setBusy(true);
@@ -75,9 +76,6 @@ function Checkout() {
           <label className={`flex cursor-pointer items-center gap-3 rounded-xl border bg-card p-4 ${pay === "cod" ? "border-primary" : ""}`}>
             <input type="radio" checked={pay === "cod"} onChange={() => setPay("cod")} /> Cash on delivery
           </label>
-          <label className="flex items-center gap-3 rounded-xl border bg-muted p-4 text-muted-foreground">
-            <input type="radio" disabled /> Pay online (UPI / card) — coming soon
-          </label>
         </div>
       </div>
       <aside className="h-fit rounded-2xl border bg-card p-6 md:mt-16">
@@ -88,9 +86,10 @@ function Checkout() {
           ))}
         </ul>
         <div className="gold-rule my-4" />
-        <div className="flex justify-between text-sm"><span>Delivery</span><span>{ship ? inr(ship) : "Free"}</span></div>
-        <div className="mt-2 flex justify-between text-lg font-bold"><span>Total</span><span>{inr(subtotal + ship)}</span></div>
-        <button disabled={busy} className="mt-5 w-full rounded-full bg-primary py-3 font-semibold text-primary-foreground hover:bg-primary-deep disabled:opacity-50">
+        <div className="flex justify-between text-sm"><span>Delivery</span><span>{ship === null ? "Not confirmed" : inr(ship)}</span></div>
+        <div className="mt-2 flex justify-between text-lg font-bold"><span>Items total</span><span>{inr(subtotal)}</span></div>
+        <p className="mt-4 text-sm text-muted-foreground">Checkout is unavailable until delivery charges are confirmed.</p>
+        <button disabled={busy || ship === null} className="mt-5 w-full rounded-full bg-primary py-3 font-semibold text-primary-foreground hover:bg-primary-deep disabled:opacity-50">
           {busy ? "Placing order…" : "Place order"}
         </button>
       </aside>
