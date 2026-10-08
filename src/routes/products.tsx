@@ -6,7 +6,7 @@ import { ProductCard } from "@/components/site/ProductCard";
 type Search = { q?: string | undefined; category?: string | undefined; sort?: "new" | "low" | "high" | "discount" | undefined };
 
 export const Route = createFileRoute("/products")({
-  validateSearch: (s: Record<string, unknown>): Search => ({
+  validateSearch: (s: { q?: unknown; category?: unknown; sort?: unknown }): Search => ({
     q: typeof s.q === "string" ? s.q.slice(0, 100) : undefined,
     category: typeof s.category === "string" ? s.category : undefined,
     sort: ["new", "low", "high", "discount"].includes(s.sort as string) ? (s.sort as Search["sort"]) : undefined,
